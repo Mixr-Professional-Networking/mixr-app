@@ -2,7 +2,7 @@
 
 1. Run git clone https://github.com/LA-Hacks-2021/mixr-app.git
 
-2. cd to the directory where you cloned the code and run `npn install`
+2. cd to the directory where you cloned the code and run `npm install`
 
 3. Make sure you have Expo installed by running `npm install -g expo-cli`
 
