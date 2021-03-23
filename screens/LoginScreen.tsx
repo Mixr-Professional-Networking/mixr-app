@@ -1,3 +1,4 @@
+import { useLinkProps } from '@react-navigation/native';
 import * as React from 'react';
 import {
   SafeAreaView,
@@ -7,12 +8,20 @@ import {
   StatusBar,
 } from 'react-native';
 
-export default function LoginScreen() {
+import { connect } from 'react-redux';
+import { logIn, logOut } from '../redux/actions';
+
+function LoginScreen(props: any) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <Text style={styles.title}>This button doesn't do anything yet</Text>
-      <Button title="Log in" onPress={() => {}} />
+      <Text style={styles.title}>This button will log you in</Text>
+      <Button
+        title="Log in"
+        onPress={() => {
+          props.logIn();
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -29,3 +38,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+const mapDipatchToProps = {
+  logIn,
+  logOut,
+};
+
+export default connect(null, mapDipatchToProps)(LoginScreen);

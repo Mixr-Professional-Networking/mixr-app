@@ -14,19 +14,23 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginNavigator from './LoginNavigator';
 
+import { connect } from 'react-redux';
+
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
-export default function Navigation({
+export function Navigation({
   colorScheme,
+  isLoggedIn,
 }: {
   colorScheme: ColorSchemeName;
+  isLoggedIn: boolean;
 }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <RootNavigator isLoggedIn={isLoggedIn} />
     </NavigationContainer>
   );
 }
@@ -35,7 +39,7 @@ export default function Navigation({
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+function RootNavigator(props: { isLoggedIn: boolean }) {
   const isLoading: Boolean = false;
   // Change to false to see login screen
   const isLoggedIn: Boolean = true;
@@ -45,7 +49,7 @@ function RootNavigator() {
   }
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
+      {props.isLoggedIn ? (
         <Stack.Screen name="Root" component={BottomTabNavigator} />
       ) : (
         <Stack.Screen
@@ -64,3 +68,10 @@ function RootNavigator() {
     </Stack.Navigator>
   );
 }
+function mapStateToProps(state: { updateLogin: { loggedIn: boolean } }) {
+  console.log(state);
+  return {
+    isLoggedIn: state.updateLogin.loggedIn,
+  };
+}
+export default connect(mapStateToProps)(Navigation);
