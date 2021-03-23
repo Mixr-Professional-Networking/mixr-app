@@ -1,3 +1,4 @@
 import updateLogin from './updateLogin';
+import updateMessages from './updateMessages';
 
-export { updateLogin };
+export { updateLogin, updateMessages };

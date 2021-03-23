@@ -20,3 +20,11 @@ export type TabTwoParamList = {
 export type LoginParamList = {
   LoginScreen: undefined;
 };
+
+export type Message = {
+  name: string;
+  lastMessageDate: Date;
+  lastMessage: string;
+};
+
+export type MessageList = Message[];

@@ -68,7 +68,7 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
   );
 }
 function mapStateToProps(state: { updateLogin: { loggedIn: boolean } }) {
-  console.log(state);
+  // console.log(state);
   return {
     isLoggedIn: state.updateLogin.loggedIn,
   };

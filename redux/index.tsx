@@ -1,9 +1,10 @@
 import { combineReducers, createStore } from 'redux';
-import { updateLogin } from './reducers';
+import { updateLogin, updateMessages } from './reducers';
 
 const store = createStore(
   combineReducers({
     updateLogin,
+    updateMessages,
   })
 );
 
