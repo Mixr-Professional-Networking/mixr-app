@@ -1,20 +1,20 @@
 import { useLinkProps } from '@react-navigation/native';
 import * as React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  Button,
-  StatusBar,
-} from 'react-native';
+import { StyleSheet, Button, StatusBar } from 'react-native';
 
 import { connect } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
+import useColorScheme from '../hooks/useColorScheme';
+import { View, Text } from '../components/Themed';
 
 function LoginScreen(props: any) {
+  const colorScheme = useColorScheme();
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+    <View style={styles.container}>
+      <StatusBar
+        barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'}
+      />
       <Text style={styles.title}>This button will log you in</Text>
       <Button
         title="Log in"
@@ -22,16 +22,14 @@ function LoginScreen(props: any) {
           props.logIn();
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 20,

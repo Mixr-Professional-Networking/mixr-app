@@ -42,7 +42,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator(props: { isLoggedIn: boolean }) {
   const isLoading: Boolean = false;
   // Change to false to see login screen
-  const isLoggedIn: Boolean = true;
   const isSignedOut: Boolean = false;
   if (isLoading) {
     return <SplashScreen />;
