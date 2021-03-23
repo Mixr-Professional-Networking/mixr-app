@@ -7,7 +7,10 @@ import { logIn, logOut } from '../redux/actions';
 import useColorScheme from '../hooks/useColorScheme';
 import { View, Text } from '../components/Themed';
 
-import LinkedInModal from 'react-native-linkedin'
+// import LinkedInModal from 'react-native-linkedin'
+
+import Auth0 from 'react-native-auth0';
+const auth0 = new Auth0({ domain: 'mixr.us.auth0.com', clientId: 'BwQHBhF9SiT4jJqDUPf2nubOfF5x40r7' });
 
 function LoginScreen(props: any) {
   const colorScheme = useColorScheme();
@@ -20,7 +23,17 @@ function LoginScreen(props: any) {
       <Button
         title="Log in"
         onPress={() => {
-          props.logIn();
+          // props.logIn();
+          auth0
+            .webAuth
+            .authorize({scope: 'openid profile email'})
+            .then(credentials =>
+              // Successfully authenticated
+              // Store the accessToken
+              // this.setState({ accessToken: credentials.accessToken })
+              console.log(credentials.accessToken)
+            )
+            .catch(error => console.log(error));
         }}
       />
 
