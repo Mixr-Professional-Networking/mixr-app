@@ -25,6 +25,7 @@ export type Message = {
   name: string;
   lastMessageDate: Date;
   lastMessage: string;
+  photo_url: string;
 };
 
 export type MessageList = Message[];
