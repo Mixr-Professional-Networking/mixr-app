@@ -6,8 +6,17 @@ import {
   Message as MessageType,
   MessageList as MessageListType,
 } from '../types';
+import {
+  isDateBeforeToday,
+  formatDate,
+  formatTime,
+} from '../hooks/dateFormatting';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
+//todo: fix light mode color, implement 2 lines of text max
 function Message(props: { message: MessageType }) {
+  const color = useColorScheme();
   return (
     <View style={styles.messageContainer}>
       <Image
@@ -15,10 +24,18 @@ function Message(props: { message: MessageType }) {
         source={{ uri: props.message.photo_url }}
         resizeMode="cover"
       />
-      <View style={styles.messageText}>
-        <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
-        <Text>{props.message.lastMessageDate.toString()}</Text>
-        <Text>{props.message.lastMessage}</Text>
+      <View style={styles.messageTextContainer}>
+        <View style={styles.messageHeading}>
+          <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
+          <Text>
+            {isDateBeforeToday(props.message.lastMessageDate)
+              ? formatDate(props.message.lastMessageDate)
+              : formatTime(props.message.lastMessageDate)}
+          </Text>
+        </View>
+        <Text style={{ color: Colors[color].tabIconDefault }}>
+          {props.message.lastMessage}
+        </Text>
       </View>
     </View>
   );
@@ -33,7 +50,7 @@ function MessageList(props: { messages: MessageListType }) {
       <FlatList
         data={props.messages}
         renderItem={renderItem}
-        keyExtractor={(message) => message.name}
+        keyExtractor={(message) => message.linkedin_url}
         // might need to include selectedId
       />
     </View>
@@ -50,14 +67,12 @@ export default connect(mapStateToProps)(MessageList);
 
 const styles = StyleSheet.create({
   messageContainer: {
-    flex: 1,
     flexDirection: 'row',
-    // backgroundColor: 'rgba(52, 52, 52, 0)',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    margin: 10,
+    margin: 20,
   },
-  messageText: {
+  messageTextContainer: {
     flex: 1,
   },
   listView: {
@@ -67,6 +82,10 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginHorizontal: 15,
+    marginRight: 15,
+  },
+  messageHeading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

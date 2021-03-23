@@ -26,6 +26,7 @@ export type Message = {
   lastMessageDate: Date;
   lastMessage: string;
   photo_url: string;
+  linkedin_url: string; //used for key in list, can be replaced with something else
 };
 
 export type MessageList = Message[];
