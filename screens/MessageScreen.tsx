@@ -12,7 +12,6 @@ function MessageScreen({
     params: { headerTitle: string; linkedin_url: string };
   };
 }) {
-  console.log(route);
   const navigation = useNavigation();
   navigation.setOptions({ headerTitle: route.params.headerTitle });
   return <TextChat linkedin_url={route.params.linkedin_url} />;
