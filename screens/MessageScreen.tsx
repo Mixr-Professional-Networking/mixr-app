@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import TextChat from '../components/TextChat';
+// import { useEffect } from 'react';
 
 //url is the key as of now
 function MessageScreen({
@@ -13,7 +14,11 @@ function MessageScreen({
   };
 }) {
   const navigation = useNavigation();
-  navigation.setOptions({ headerTitle: route.params.headerTitle });
+
+  React.useEffect(() => {
+    navigation.setOptions({ title: route.params.headerTitle });
+  });
+
   return <TextChat linkedin_url={route.params.linkedin_url} />;
 }
 
