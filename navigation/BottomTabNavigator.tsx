@@ -1,7 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -16,20 +17,25 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="Match"
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
-        name="TabOne"
+        name="Match"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="people-outline" color={color} type="Ionicons" />
+          ),
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Messages"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="message-circle" color={color} type="Feather" />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -38,8 +44,20 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: {
+  name:
+    | React.ComponentProps<typeof Ionicons>['name']
+    | React.ComponentProps<typeof Feather>['name'];
+  color: string;
+  type: 'Ionicons' | 'Feather';
+}) {
+  if (props.type === 'Ionicons')
+    // @ts-ignore errors below, ignore for now
+    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  else if (props.type === 'Feather')
+    // @ts-ignore
+    return <Feather size={30} style={{ marginBottom: -3 }} {...props} />;
+  else return <View />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -52,7 +70,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        options={{ headerTitle: 'Match' }}
       />
     </TabOneStack.Navigator>
   );
@@ -66,7 +84,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerTitle: 'Messages' }}
       />
     </TabTwoStack.Navigator>
   );

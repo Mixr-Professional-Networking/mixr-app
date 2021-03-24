@@ -11,7 +11,8 @@ const initialState = [
   {
     name: 'Arek Der-Sarkissian',
     lastMessageDate: new Date(),
-    lastMessage: "Hey, what's up?",
+    lastMessage:
+      "This is an example of a longer message. It's supposed to take up multiple lines on the screen. Here's a third line on my iPhone",
     photo_url:
       'https://media-exp1.licdn.com/dms/image/C5603AQHrHiKhwEpumg/profile-displayphoto-shrink_400_400/0/1613274899664?e=1622073600&v=beta&t=jxVmfhz-aqLnZ2voG4XxHgNXo9qke4Lyp-JhFTsnjIQ',
     linkedin_url: 'https://www.linkedin.com/in/areksds/',

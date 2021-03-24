@@ -14,29 +14,35 @@ import {
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
-//todo: fix light mode color, implement 2 lines of text max
 function Message(props: { message: MessageType }) {
   const color = useColorScheme();
   return (
     <View style={styles.messageContainer}>
-      <Image
-        style={styles.profileImage}
-        source={{ uri: props.message.photo_url }}
-        resizeMode="cover"
-      />
-      <View style={styles.messageTextContainer}>
-        <View style={styles.messageHeading}>
-          <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
-          <Text>
-            {isDateBeforeToday(props.message.lastMessageDate)
-              ? formatDate(props.message.lastMessageDate)
-              : formatTime(props.message.lastMessageDate)}
+      <View style={styles.message}>
+        <Image
+          style={styles.profileImage}
+          source={{ uri: props.message.photo_url }}
+          resizeMode="cover"
+        />
+        <View style={styles.messageTextContainer}>
+          <View style={styles.messageHeading}>
+            <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
+            <Text style={{ color: Colors[color].greyText }}>
+              {isDateBeforeToday(props.message.lastMessageDate)
+                ? formatDate(props.message.lastMessageDate)
+                : formatTime(props.message.lastMessageDate)}
+            </Text>
+          </View>
+          <Text style={{ color: Colors[color].greyText }} numberOfLines={2}>
+            {props.message.lastMessage}
           </Text>
         </View>
-        <Text style={{ color: Colors[color].tabIconDefault }}>
-          {props.message.lastMessage}
-        </Text>
       </View>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
     </View>
   );
 }
@@ -58,7 +64,6 @@ function MessageList(props: { messages: MessageListType }) {
 }
 
 function mapStateToProps(state: { updateMessages: MessageListType }) {
-  // console.log(state);
   return {
     messages: state.updateMessages,
   };
@@ -66,7 +71,8 @@ function mapStateToProps(state: { updateMessages: MessageListType }) {
 export default connect(mapStateToProps)(MessageList);
 
 const styles = StyleSheet.create({
-  messageContainer: {
+  messageContainer: {},
+  message: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -74,9 +80,12 @@ const styles = StyleSheet.create({
   },
   messageTextContainer: {
     flex: 1,
+    alignContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   listView: {
     width: '100%',
+    height: '100%',
   },
   profileImage: {
     width: 50,
@@ -87,5 +96,8 @@ const styles = StyleSheet.create({
   messageHeading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  separator: {
+    height: 1,
   },
 });
