@@ -9,6 +9,7 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
     greyText: '#555',
+    touchableHighlight: '#DDDDDD',
   },
   dark: {
     text: '#fff',
@@ -17,5 +18,6 @@ export default {
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
     greyText: '#ccc',
+    touchableHighlight: '#555',
   },
 };

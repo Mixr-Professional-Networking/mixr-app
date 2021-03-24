@@ -15,6 +15,7 @@ export type TabOneParamList = {
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
+  Message: undefined;
 };
 
 export type LoginParamList = {
@@ -30,3 +31,15 @@ export type Message = {
 };
 
 export type MessageList = Message[];
+
+export type MessageHistory = {
+  [name: string]: {
+    name: string;
+    messages: {
+      date: Date;
+      messageContent: string;
+      sender: string;
+    }[];
+    photo_url: string;
+  };
+};

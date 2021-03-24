@@ -6,6 +6,7 @@ import { View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import MessageScreen from '../screens/MessageScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
@@ -85,6 +86,11 @@ function TabTwoNavigator() {
         name="TabTwoScreen"
         component={TabTwoScreen}
         options={{ headerTitle: 'Messages' }}
+      />
+      <TabTwoStack.Screen
+        name="Message"
+        component={MessageScreen}
+        // options={{ headerTitle: 'Person' }}
       />
     </TabTwoStack.Navigator>
   );

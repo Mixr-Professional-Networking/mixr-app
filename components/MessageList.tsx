@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, StyleSheet, Image } from 'react-native';
+import { FlatList, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { View, Text } from '../components/Themed';
 import {
@@ -13,31 +13,44 @@ import {
 } from '../hooks/dateFormatting';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 function Message(props: { message: MessageType }) {
   const color = useColorScheme();
+  const navigation = useNavigation();
+  const navigateToMessage = () => {
+    navigation.navigate('Message', {
+      headerTitle: props.message.name,
+      linkedin_url: props.message.linkedin_url,
+    });
+  };
   return (
     <View style={styles.messageContainer}>
-      <View style={styles.message}>
-        <Image
-          style={styles.profileImage}
-          source={{ uri: props.message.photo_url }}
-          resizeMode="cover"
-        />
-        <View style={styles.messageTextContainer}>
-          <View style={styles.messageHeading}>
-            <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
-            <Text style={{ color: Colors[color].greyText }}>
-              {isDateBeforeToday(props.message.lastMessageDate)
-                ? formatDate(props.message.lastMessageDate)
-                : formatTime(props.message.lastMessageDate)}
+      <TouchableHighlight
+        underlayColor={Colors[color].touchableHighlight}
+        onPress={navigateToMessage}
+      >
+        <View style={styles.message}>
+          <Image
+            style={styles.profileImage}
+            source={{ uri: props.message.photo_url }}
+            resizeMode="cover"
+          />
+          <View style={styles.messageTextContainer}>
+            <View style={styles.messageHeading}>
+              <Text style={{ fontWeight: 'bold' }}>{props.message.name}</Text>
+              <Text style={{ color: Colors[color].greyText }}>
+                {isDateBeforeToday(props.message.lastMessageDate)
+                  ? formatDate(props.message.lastMessageDate)
+                  : formatTime(props.message.lastMessageDate)}
+              </Text>
+            </View>
+            <Text style={{ color: Colors[color].greyText }} numberOfLines={2}>
+              {props.message.lastMessage}
             </Text>
           </View>
-          <Text style={{ color: Colors[color].greyText }} numberOfLines={2}>
-            {props.message.lastMessage}
-          </Text>
         </View>
-      </View>
+      </TouchableHighlight>
       <View
         style={styles.separator}
         lightColor="#eee"
@@ -77,11 +90,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     margin: 20,
+    backgroundColor: 'rgba(52, 52, 52, 0)',
   },
   messageTextContainer: {
     flex: 1,
     alignContent: 'flex-end',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(52, 52, 52, 0)',
   },
   listView: {
     width: '100%',
@@ -96,6 +111,7 @@ const styles = StyleSheet.create({
   messageHeading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(52, 52, 52, 0)',
   },
   separator: {
     height: 1,
