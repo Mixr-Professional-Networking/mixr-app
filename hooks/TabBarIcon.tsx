@@ -1,24 +1,47 @@
 import * as React from 'react';
 import { View } from '../components/Themed';
-import { Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
+import {
+  Ionicons,
+  Feather,
+  FontAwesome,
+  MaterialIcons,
+} from '@expo/vector-icons';
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-export default function TabBarIcon(props: {
-  name:
-    | React.ComponentProps<typeof Ionicons>['name']
-    | React.ComponentProps<typeof Feather>['name'];
-  color: string;
-  type: 'Ionicons' | 'Feather' | 'FontAwesome';
-}) {
+export default function TabBarIcon(
+  props: {
+    color: string;
+    size?: number;
+  } & (
+    | {
+        name: React.ComponentProps<typeof Ionicons>['name'];
+        type: 'Ionicons';
+      }
+    | {
+        name: React.ComponentProps<typeof Feather>['name'];
+        type: 'Feather';
+      }
+    | {
+        name: React.ComponentProps<typeof FontAwesome>['name'];
+        type: 'FontAwesome';
+      }
+    | {
+        name: React.ComponentProps<typeof MaterialIcons>['name'];
+        type: 'MaterialIcons';
+      }
+  )
+) {
+  const size = props.size ? props.size : 30;
   if (props.type === 'Ionicons')
-    // @ts-ignore errors below, ignore for now
-    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+    return <Ionicons size={size} style={{ marginBottom: -3 }} {...props} />;
   else if (props.type === 'Feather')
-    // @ts-ignore
-    return <Feather size={30} style={{ marginBottom: -3 }} {...props} />;
+    return <Feather size={size} style={{ marginBottom: -3 }} {...props} />;
   else if (props.type === 'FontAwesome')
-    // @ts-ignore
-    return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+    return <FontAwesome size={size} style={{ marginBottom: -3 }} {...props} />;
+  else if (props.type === 'MaterialIcons')
+    return (
+      <MaterialIcons size={size} style={{ marginBottom: -3 }} {...props} />
+    );
   else return <View />;
 }

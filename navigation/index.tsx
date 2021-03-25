@@ -16,7 +16,7 @@ import LoginNavigator from './LoginNavigator';
 
 import { connect } from 'react-redux';
 import CallScreen from '../screens/CallScreen';
-import Layout from '../constants/Layout';
+import { CardStyleInterpolators } from '@react-navigation/stack';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -48,7 +48,11 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
     return <SplashScreen />;
   }
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       {props.isLoggedIn ? (
         <Stack.Screen name="Root" component={BottomTabNavigator} />
       ) : (
@@ -65,8 +69,11 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
         component={CallScreen}
         options={{
           headerTitle: 'Call',
-          // headerStyle: { marginTop: StatusBar.currentHeight },
+          gestureEnabled: false,
+          cardStyleInterpolator:
+            CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
+        // headerStyle: { marginTop: StatusBar.currentHeight },
       />
       <Stack.Screen
         name="NotFound"
