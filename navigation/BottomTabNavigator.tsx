@@ -1,11 +1,11 @@
-import { Ionicons, Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
+import TabBarIcon from '../hooks/TabBarIcon';
 import useColorScheme from '../hooks/useColorScheme';
+import CallScreen from '../screens/CallScreen';
 import MessageScreen from '../screens/MessageScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
@@ -43,24 +43,6 @@ export default function BottomTabNavigator() {
   );
 }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name:
-    | React.ComponentProps<typeof Ionicons>['name']
-    | React.ComponentProps<typeof Feather>['name'];
-  color: string;
-  type: 'Ionicons' | 'Feather';
-}) {
-  if (props.type === 'Ionicons')
-    // @ts-ignore errors below, ignore for now
-    return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-  else if (props.type === 'Feather')
-    // @ts-ignore
-    return <Feather size={30} style={{ marginBottom: -3 }} {...props} />;
-  else return <View />;
-}
-
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const TabOneStack = createStackNavigator<TabOneParamList>();
@@ -87,11 +69,7 @@ function TabTwoNavigator() {
         component={TabTwoScreen}
         options={{ headerTitle: 'Messages' }}
       />
-      <TabTwoStack.Screen
-        name="Message"
-        component={MessageScreen}
-        // options={{ headerTitle: 'Person' }}
-      />
+      <TabTwoStack.Screen name="Message" component={MessageScreen} />
     </TabTwoStack.Navigator>
   );
 }

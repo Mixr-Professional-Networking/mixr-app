@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, StatusBar } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SplashScreen from '../screens/SplashScreen';
@@ -15,6 +15,8 @@ import LinkingConfiguration from './LinkingConfiguration';
 import LoginNavigator from './LoginNavigator';
 
 import { connect } from 'react-redux';
+import CallScreen from '../screens/CallScreen';
+import Layout from '../constants/Layout';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -41,7 +43,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator(props: { isLoggedIn: boolean }) {
   const isLoading: Boolean = false;
-  // Change to false to see login screen
   const isSignedOut: Boolean = false;
   if (isLoading) {
     return <SplashScreen />;
@@ -59,6 +60,14 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
           }}
         />
       )}
+      <Stack.Screen
+        name="Call"
+        component={CallScreen}
+        options={{
+          headerTitle: 'Call',
+          // headerStyle: { marginTop: StatusBar.currentHeight },
+        }}
+      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
