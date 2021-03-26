@@ -14,16 +14,6 @@ import {
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
-import { API_ROOT_URL_LOCALTUNNEL } from "../constants/Api";
-
-import axios from "axios";
-
-import TwilioServiceSingleton from "../services/TwilioServiceSingleton";
-import { Client } from "twilio-chat";
-import { Channel } from "twilio-chat/lib/channel";
-import { Message as TwilioMessage } from "twilio-chat/lib/message";
-
-import { setMessageList, newMessage } from "../redux/actions/updateMessages";
 
 function Message(props: { message: MessageType }) {
   const color = useColorScheme();
