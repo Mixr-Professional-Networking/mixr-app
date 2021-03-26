@@ -35,12 +35,15 @@ export type MessageList = Message[];
 
 export type MessageHistory = {
   [name: string]: {
-    name: string;
     messages: {
-      date: Date;
-      messageContent: string;
-      sender: string;
+      _id: number;
+      text: string;
+      createdAt: Date;
+      user: {
+        _id: number;
+        name: string;
+        avatar: string;
+      };
     }[];
-    photo_url: string;
   };
 };

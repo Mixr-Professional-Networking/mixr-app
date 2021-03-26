@@ -10,6 +10,6 @@ export function formatTime(date: Date) {
   return (
     (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()) +
     ':' +
-    (date.getMinutes() < 9 ? '0' + date.getMinutes() : date.getMinutes())
+    (date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes())
   );
 }
