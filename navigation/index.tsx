@@ -2,21 +2,22 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
-} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-import { ColorSchemeName, StatusBar } from 'react-native';
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import { ColorSchemeName, StatusBar } from "react-native";
 
-import NotFoundScreen from '../screens/NotFoundScreen';
-import SplashScreen from '../screens/SplashScreen';
-import { RootStackParamList } from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
-import LinkingConfiguration from './LinkingConfiguration';
-import LoginNavigator from './LoginNavigator';
+import NotFoundScreen from "../screens/NotFoundScreen";
+import SplashScreen from "../screens/SplashScreen";
+import { RootStackParamList } from "../types";
+import BottomTabNavigator from "./BottomTabNavigator";
+import LinkingConfiguration from "./LinkingConfiguration";
+import LoginNavigator from "./LoginNavigator";
+import TwilioChannelManager from "../components/TwilioChannelManager";
 
-import { connect } from 'react-redux';
-import CallScreen from '../screens/CallScreen';
-import { CardStyleInterpolators } from '@react-navigation/stack';
+import { connect } from "react-redux";
+import CallScreen from "../screens/CallScreen";
+import { CardStyleInterpolators } from "@react-navigation/stack";
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -26,12 +27,15 @@ export function Navigation({
 }: {
   colorScheme: ColorSchemeName;
   isLoggedIn: boolean;
+  newMessage: any;
+  setMessageList: any;
 }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
+      <TwilioChannelManager />
       <RootNavigator isLoggedIn={isLoggedIn} />
     </NavigationContainer>
   );
@@ -60,7 +64,7 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
           name="Login"
           component={LoginNavigator}
           options={{
-            animationTypeForReplace: isSignedOut ? 'pop' : 'push',
+            animationTypeForReplace: isSignedOut ? "pop" : "push",
           }}
         />
       )}
@@ -68,7 +72,7 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
         name="Call"
         component={CallScreen}
         options={{
-          headerTitle: 'Call',
+          headerTitle: "Call",
           gestureEnabled: false,
           cardStyleInterpolator:
             CardStyleInterpolators.forFadeFromBottomAndroid,
@@ -78,7 +82,7 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: 'Oops!' }}
+        options={{ title: "Oops!" }}
       />
     </Stack.Navigator>
   );
