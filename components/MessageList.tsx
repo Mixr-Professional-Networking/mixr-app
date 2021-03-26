@@ -86,7 +86,6 @@ function MessageList(props: MessageListProps) {
     axios
       .get(`${API_ROOT_URL_LOCALTUNNEL}/token/${userId}`)
       .then((twilioUser) => {
-        console.log("user", twilioUser.data);
         return twilioUser.data.jwt;
       });
 
@@ -96,7 +95,7 @@ function MessageList(props: MessageListProps) {
    */
   const setChannelEventListeners = (client: Client) => {
     client.on("messageAdded", (message: TwilioMessage) => {
-      props.newMessage(message);
+      props.newMessage(message.channel.friendlyName, message);
     });
     return client;
   };
@@ -110,21 +109,22 @@ function MessageList(props: MessageListProps) {
     const getLastMessage = async (channel: Channel) => {
       const paginator = await channel.getMessages();
       if (paginator.items.length === 0) return null;
-      else return paginator.items[0].body;
+      else return paginator.items[paginator.items.length - 1].body;
     };
 
     return await Promise.all(
-      channels.map(async (channel, idx) => ({
+      channels.map(async (channel) => ({
         lastMessageDate: channel.lastMessage
           ? channel.lastMessage.dateCreated
           : new Date(),
         lastMessage: await getLastMessage(channel),
         // Dummy values
         // TODO: update these with actual profile info from linkedin
-        name: "Dummy Chat",
+        name: channel.friendlyName,
+        channelName: channel.friendlyName,
         photo_url:
           "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
-        linkedin_url: `dummy${idx}`,
+        linkedin_url: channel.friendlyName,
       }))
     );
   };
@@ -134,13 +134,11 @@ function MessageList(props: MessageListProps) {
    * @param client - Twilio chat client instance
    */
   const getSubscribedChannels = async (client: Client) => {
-    console.log("get channels");
     client
       .getSubscribedChannels()
       .then((channelPaginator) => parseChannels(channelPaginator.items))
       .then((newChannels) => {
-        console.log(newChannels);
-        props.setMessageList([...props.messages, ...newChannels]);
+        props.setMessageList([...newChannels]);
       });
   };
 
@@ -158,10 +156,6 @@ function MessageList(props: MessageListProps) {
       .then(getSubscribedChannels)
       .catch((err) => console.error(err.message));
   }, [props.setMessageList]);
-
-  React.useEffect(() => {
-    console.log("messages: ", props.messages);
-  }, [props.messages]);
 
   const renderItem = ({ item }: { item: MessageType }) => {
     return <Message message={item} />;

@@ -10,6 +10,6 @@ export const setMessageList = (messages: Message[]) => {
 export const newMessage = (channelName: string, message: Message) => {
   return {
     type: "NEW_MESSAGE",
-    payload: { channelName, ...message },
+    payload: { channelName, message },
   };
 };
