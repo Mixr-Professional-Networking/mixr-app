@@ -101,10 +101,32 @@ function MessageList(props: MessageListProps) {
     return client;
   };
 
-  // TODO: Update this to actually parse the channels
-  const parseChannels = (items: Channel[]) => {
-    console.log("parsing channels");
-    return items;
+  /**
+   * Convert from Twilio channel object to object stored in redux
+   * @param channels - Array of Twilio channels
+   */
+  const parseChannels = async (channels: Channel[]) => {
+    // Get channel's last message body
+    const getLastMessage = async (channel: Channel) => {
+      const paginator = await channel.getMessages();
+      if (paginator.items.length === 0) return null;
+      else return paginator.items[0].body;
+    };
+
+    return await Promise.all(
+      channels.map(async (channel, idx) => ({
+        lastMessageDate: channel.lastMessage
+          ? channel.lastMessage.dateCreated
+          : new Date(),
+        lastMessage: await getLastMessage(channel),
+        // Dummy values
+        // TODO: update these with actual profile info from linkedin
+        name: "Dummy Chat",
+        photo_url:
+          "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
+        linkedin_url: `dummy${idx}`,
+      }))
+    );
   };
 
   /**
@@ -113,42 +135,33 @@ function MessageList(props: MessageListProps) {
    */
   const getSubscribedChannels = async (client: Client) => {
     console.log("get channels");
-    // client.getSubscribedChannels().then((user) => console.log(user));
-    const channel = await client.getSubscribedChannels();
-    console.log("after get");
-    console.log(channel.items);
-    // .then((channelPaginator) => parseChannels(channelPaginator.items))
-    // .then((newChannels) => {
-    //   console.log(newChannels);
-    //   // props.setMessageList(newChannels);
-    // });
-  };
-
-  const printClient = async (token: string) => {
-    console.log("get client");
-    const client = await TwilioServiceSingleton.getInstance().getChatClient(
-      token
-    );
-    console.log("finishd getting client");
-    return client;
+    client
+      .getSubscribedChannels()
+      .then((channelPaginator) => parseChannels(channelPaginator.items))
+      .then((newChannels) => {
+        console.log(newChannels);
+        props.setMessageList([...props.messages, ...newChannels]);
+      });
   };
 
   React.useEffect(() => {
     // TODO: Update redux to include email address (use email as userId)
     const email = "mixr.devs@gmail.com";
     getToken(email)
-      .then((token) => printClient(token))
-      .then(() => {
-        console.log("add token listener");
-        return TwilioServiceSingleton.getInstance().addTokenListener(
-          getToken,
-          email
-        );
-      })
+      .then((token) =>
+        TwilioServiceSingleton.getInstance().getChatClient(token)
+      )
+      .then(() =>
+        TwilioServiceSingleton.getInstance().addTokenListener(getToken, email)
+      )
       .then(setChannelEventListeners)
       .then(getSubscribedChannels)
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err.message));
   }, [props.setMessageList]);
+
+  React.useEffect(() => {
+    console.log("messages: ", props.messages);
+  }, [props.messages]);
 
   const renderItem = ({ item }: { item: MessageType }) => {
     return <Message message={item} />;
