@@ -9,7 +9,7 @@ import { ColorSchemeName, StatusBar } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SplashScreen from '../screens/SplashScreen';
-import { RootStackParamList } from '../types';
+import { Login, RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginNavigator from './LoginNavigator';
@@ -83,7 +83,7 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
     </Stack.Navigator>
   );
 }
-function mapStateToProps(state: { updateLogin: { loggedIn: boolean } }) {
+function mapStateToProps(state: { updateLogin: Login }) {
   // console.log(state);
   return {
     isLoggedIn: state.updateLogin.loggedIn,

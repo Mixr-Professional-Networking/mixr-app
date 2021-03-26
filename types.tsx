@@ -39,11 +39,19 @@ export type MessageHistory = {
       _id: number;
       text: string;
       createdAt: Date;
-      user: {
-        _id: number;
-        name: string;
-        avatar: string;
-      };
+      user: User;
     }[];
   };
+};
+
+export type User = {
+  _id: number;
+  name: string;
+  avatar: string;
+};
+
+export type Login = {
+  loggedIn: boolean;
+  linkedin: string;
+  user: User;
 };

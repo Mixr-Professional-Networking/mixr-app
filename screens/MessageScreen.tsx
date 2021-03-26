@@ -21,9 +21,7 @@ function MessageScreen({
   const navigation = useNavigation();
   const color = useColorScheme();
   const navigateToCallScreen = () => {
-    navigation.navigate('Call', {
-      headerTitle: route.params.headerTitle,
-    });
+    navigation.navigate('Call');
   };
 
   React.useEffect(() => {
