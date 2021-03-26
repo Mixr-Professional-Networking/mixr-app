@@ -19,11 +19,11 @@ const initialState = [
   },
 ];
 
-function updateMessages(state = initialState, action: any) {
+function messagesReducer(state = initialState, action: any) {
   switch (action.type) {
     default:
       return state;
   }
 }
 
-export default updateMessages;
+export default messagesReducer;

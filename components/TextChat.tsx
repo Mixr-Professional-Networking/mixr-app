@@ -18,12 +18,12 @@ function TextChat(props: {
 }
 
 function mapStateToProps(state: {
-  updateMessageHistory: MessageHistoryType;
-  updateLogin: Login;
+  messageHistory: MessageHistoryType;
+  login: Login;
 }) {
   return {
-    messageHistory: state.updateMessageHistory,
-    user: state.updateLogin.user,
+    messageHistory: state.messageHistory,
+    user: state.login.user,
   };
 }
 export default connect(mapStateToProps)(TextChat);

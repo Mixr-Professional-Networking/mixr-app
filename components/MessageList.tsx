@@ -76,9 +76,9 @@ function MessageList(props: { messages: MessageListType }) {
   );
 }
 
-function mapStateToProps(state: { updateMessages: MessageListType }) {
+function mapStateToProps(state: { messages: MessageListType }) {
   return {
-    messages: state.updateMessages,
+    messages: state.messages,
   };
 }
 export default connect(mapStateToProps)(MessageList);

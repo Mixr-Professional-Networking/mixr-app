@@ -83,10 +83,10 @@ function RootNavigator(props: { isLoggedIn: boolean }) {
     </Stack.Navigator>
   );
 }
-function mapStateToProps(state: { updateLogin: Login }) {
+function mapStateToProps(state: { login: Login }) {
   // console.log(state);
   return {
-    isLoggedIn: state.updateLogin.loggedIn,
+    isLoggedIn: state.login.loggedIn,
   };
 }
 export default connect(mapStateToProps)(Navigation);

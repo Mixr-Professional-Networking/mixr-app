@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 //@ts-ignore
 import SwipeCards from 'react-native-swipe-cards-deck';
 import Layout from '../../constants/Layout';
 import Colors from '../../constants/Colors';
 import { connect } from 'react-redux';
+import { View, Text } from '../Themed';
 
 function Card({ data }: any) {
   return (
@@ -65,10 +66,10 @@ function CardStack(props: { cards: [] }) {
 }
 
 function mapStateToProps(state: {
-  cardsReducer: any; //update when cards type gets updated
+  cards: any; //update when cards type gets updated
 }) {
   return {
-    cards: state.cardsReducer,
+    cards: state.cards,
   };
 }
 export default connect(mapStateToProps)(CardStack);

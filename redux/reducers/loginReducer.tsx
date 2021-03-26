@@ -9,7 +9,7 @@ const initialState = {
   },
 };
 
-function updateLogin(state = initialState, action: any) {
+function loginReducer(state = initialState, action: any) {
   switch (action.type) {
     case 'LOG_IN':
       return { ...state, loggedIn: true };
@@ -20,4 +20,4 @@ function updateLogin(state = initialState, action: any) {
   }
 }
 
-export default updateLogin;
+export default loginReducer;

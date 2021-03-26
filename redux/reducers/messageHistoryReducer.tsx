@@ -54,11 +54,11 @@ const initialState = {
   },
 };
 
-function updateMessageHistory(state = initialState, action: any) {
+function messageHistoryReducer(state = initialState, action: any) {
   switch (action.type) {
     default:
       return state;
   }
 }
 
-export default updateMessageHistory;
+export default messageHistoryReducer;
