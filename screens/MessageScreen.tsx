@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { useLinkProps, useNavigation } from '@react-navigation/native';
-import TextChat from '../components/TextChat';
-import TabBarIcon from '../hooks/TabBarIcon';
-import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import * as React from "react";
+import { useLinkProps, useNavigation } from "@react-navigation/native";
+import TextChat from "../components/TextChat";
+import TabBarIcon from "../hooks/TabBarIcon";
+import useColorScheme from "../hooks/useColorScheme";
+import Colors from "../constants/Colors";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 // import { useEffect } from 'react';
 
@@ -15,13 +15,13 @@ function MessageScreen({
   route: {
     key: string;
     name: string;
-    params: { headerTitle: string; linkedin_url: string };
+    params: { headerTitle: string; channelName: string };
   };
 }) {
   const navigation = useNavigation();
   const color = useColorScheme();
   const navigateToCallScreen = () => {
-    navigation.navigate('Call');
+    navigation.navigate("Call");
   };
 
   React.useEffect(() => {
@@ -38,7 +38,7 @@ function MessageScreen({
     });
   });
 
-  return <TextChat linkedin_url={route.params.linkedin_url} />;
+  return <TextChat channelName={route.params.channelName} />;
 }
 
 export default MessageScreen;

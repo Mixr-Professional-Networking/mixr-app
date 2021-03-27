@@ -29,6 +29,7 @@ export type Message = {
   lastMessage: string;
   photo_url: string;
   linkedin_url: string; //used for key in list, can be replaced with something else
+  channelName: string;
 };
 
 export type MessageList = Message[];
@@ -54,4 +55,15 @@ export type Login = {
   loggedIn: boolean;
   linkedin: string;
   user: User;
+};
+
+export type GiftedMessage = {
+  _id: number | string;
+  text: string;
+  createdAt: Date;
+  user: {
+    _id: number | string;
+    name: string;
+    avatar: string;
+  };
 };

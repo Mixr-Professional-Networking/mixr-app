@@ -21,7 +21,7 @@ function Message(props: { message: MessageType }) {
   const navigateToMessage = () => {
     navigation.navigate("Message", {
       headerTitle: props.message.name,
-      linkedin_url: props.message.linkedin_url,
+      channelName: props.message.channelName,
     });
   };
 
@@ -63,8 +63,6 @@ function Message(props: { message: MessageType }) {
 
 interface MessageListProps {
   messages: MessageListType;
-  setMessageList: any;
-  newMessage: any;
 }
 
 function MessageList(props: MessageListProps) {
@@ -76,7 +74,7 @@ function MessageList(props: MessageListProps) {
       <FlatList
         data={props.messages}
         renderItem={renderItem}
-        keyExtractor={(message) => message.linkedin_url}
+        keyExtractor={(message) => message.channelName}
         // might need to include selectedId
       />
     </View>

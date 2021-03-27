@@ -2,7 +2,7 @@
 const initialState = [
   {
     name: "Ethan Keshishian",
-    channelName: "dummy_name",
+    channelName: "ethankeshishian",
     lastMessageDate: new Date(),
     lastMessage: "Hey, what's up?",
     photo_url:
@@ -11,7 +11,7 @@ const initialState = [
   },
   {
     name: "Arek Der-Sarkissian",
-    channelName: "dummy_name2",
+    channelName: "areksds",
     lastMessageDate: new Date(),
     lastMessage:
       "This is an example of a longer message. It's supposed to take up multiple lines on the screen. Here's a third line on my iPhone",
