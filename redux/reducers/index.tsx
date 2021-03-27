@@ -1,5 +1,6 @@
-import updateLogin from './updateLogin';
-import updateMessages from './updateMessages';
-import updateMessageHistory from './updateMessageHistory';
+import loginReducer from './loginReducer';
+import messagesReducer from './messagesReducer';
+import messageHistoryReducer from './messageHistoryReducer';
+import cardsReducer from './cardsReducer';
 
-export { updateLogin, updateMessages, updateMessageHistory };
+export { loginReducer, messagesReducer, messageHistoryReducer, cardsReducer };

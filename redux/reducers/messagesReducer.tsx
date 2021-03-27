@@ -21,7 +21,7 @@ const initialState = [
   },
 ];
 
-function updateMessages(state = initialState, action: any) {
+function messagesReducer(state = initialState, action: any) {
   switch (action.type) {
     case "SET_MESSAGE_LIST":
       return action.payload;
@@ -40,4 +40,4 @@ function updateMessages(state = initialState, action: any) {
   }
 }
 
-export default updateMessages;
+export default messagesReducer;

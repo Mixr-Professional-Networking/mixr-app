@@ -14,15 +14,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CallScreen({
-  route,
-}: {
-  route: {
-    key: string;
-    name: string;
-    params: { headerTitle: string; linkedin_url: string };
-  };
-}) {
+export default function CallScreen() {
   const navigation = useNavigation();
   const color = useColorScheme();
 

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 //@ts-ignore
 import SwipeCards from 'react-native-swipe-cards-deck';
 import Layout from '../../constants/Layout';
 import Colors from '../../constants/Colors';
+import { connect } from 'react-redux';
+import { View, Text } from '../Themed';
 
 function Card({ data }: any) {
   return (
-    <View style={[styles.card, { backgroundColor: data.backgroundColor }]}>
-      <Text>{data.text}</Text>
+    <View style={styles.card}>
+      <Text>Here's the new card</Text>
     </View>
   );
 }
@@ -21,16 +23,7 @@ function StatusCard({ text }: any) {
   );
 }
 
-export default function CardStack() {
-  const [cards, setCards] = useState([
-    { text: 'Tomato', backgroundColor: 'red' },
-    { text: 'Aubergine', backgroundColor: 'purple' },
-    { text: 'Courgette', backgroundColor: 'green' },
-    { text: 'Blueberry', backgroundColor: 'blue' },
-    { text: 'Umm...', backgroundColor: 'cyan' },
-    { text: 'orange', backgroundColor: 'orange' },
-  ]);
-
+function CardStack(props: { cards: [] }) {
   function handleYup(card: { text: string; backgroundColor: string }) {
     console.log(`Yup for ${card.text}`);
     return true; // return false if you wish to cancel the action
@@ -46,9 +39,9 @@ export default function CardStack() {
 
   return (
     <View style={styles.container}>
-      {cards ? (
+      {props.cards ? (
         <SwipeCards
-          cards={cards}
+          cards={props.cards}
           renderCard={(cardData: any) => <Card data={cardData} />}
           keyExtractor={(cardData: { text: any }) => String(cardData.text)}
           renderNoMoreCards={() => <StatusCard text="No more cards..." />}
@@ -71,6 +64,15 @@ export default function CardStack() {
     </View>
   );
 }
+
+function mapStateToProps(state: {
+  cards: any; //update when cards type gets updated
+}) {
+  return {
+    cards: state.cards,
+  };
+}
+export default connect(mapStateToProps)(CardStack);
 
 const styles = StyleSheet.create({
   container: {

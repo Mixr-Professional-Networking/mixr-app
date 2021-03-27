@@ -35,12 +35,23 @@ export type MessageList = Message[];
 
 export type MessageHistory = {
   [name: string]: {
-    name: string;
     messages: {
-      date: Date;
-      messageContent: string;
-      sender: string;
+      _id: number;
+      text: string;
+      createdAt: Date;
+      user: User;
     }[];
-    photo_url: string;
   };
+};
+
+export type User = {
+  _id: number;
+  name: string;
+  avatar: string;
+};
+
+export type Login = {
+  loggedIn: boolean;
+  linkedin: string;
+  user: User;
 };

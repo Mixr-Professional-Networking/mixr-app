@@ -83,9 +83,9 @@ function MessageList(props: MessageListProps) {
   );
 }
 
-function mapStateToProps(state: { updateMessages: MessageListType }) {
+function mapStateToProps(state: { messages: MessageListType }) {
   return {
-    messages: state.updateMessages,
+    messages: state.messages,
   };
 }
 
