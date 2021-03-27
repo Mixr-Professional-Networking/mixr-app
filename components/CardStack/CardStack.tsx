@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { View, Text } from '../Themed';
 //@ts-ignore
 import SwipeCards from 'react-native-swipe-cards-deck';
 import Layout from '../../constants/Layout';
@@ -9,7 +10,15 @@ import { connect } from 'react-redux';
 function Card({ data }: any) {
   return (
     <View style={styles.card}>
-      <Text>Here's the new card</Text>
+      {/* <Text>{data.text}</Text> */}
+      <View style={styles.header}>
+        <Text>{data.name || "John Doe"}</Text>
+      </View>
+      <Text>{data.name || "John Doe"}</Text>
+      <Text>{data.position || "Software Engineer at Facebook"}</Text>
+      <Text>{data.positionDate || "March 2019-Present"}</Text>
+      <Text>{data.eduation || "University of California, Los Angeles Bachelor of Science - BS, Computer Science"}</Text>
+      <Text>{data.eduationDate || "2014-2018"}</Text>
     </View>
   );
 }
@@ -74,6 +83,11 @@ function mapStateToProps(state: {
 export default connect(mapStateToProps)(CardStack);
 
 const styles = StyleSheet.create({
+  header: {
+    flex: 0.2,
+    backgroundColor: '#5A658B',
+    width: Layout.window.width * 0.9
+  },
   container: {
     flex: 1,
     backgroundColor: 'rgba(52, 52, 52, 0)',
@@ -82,14 +96,19 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   card: {
+    flex: 1,
+    backgroundColor: "white",
     justifyContent: 'center',
     alignItems: 'center',
-    width: Layout.window.width,
-    height: '100%',
+    width: Layout.window.width * 0.9,
+    height: '90%',
     borderRadius: 25,
+    shadowColor: "black",
+    shadowOpacity: 0.2,
+    shadowRadius: 10
   },
   cardsText: {
     fontSize: 22,
     color: Colors.dark.text,
-  },
+  }
 });

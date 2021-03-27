@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, StyleSheet, Image, Button, StatusBar, Platform } from 'react-native';
+import { Alert, StyleSheet, Image, Button, StatusBar, Platform, TextInput } from 'react-native';
 import Layout from '../constants/Layout'
 import { connect } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
@@ -21,6 +21,7 @@ function LoginScreen(props: any) {
   const colorScheme = useColorScheme();
 
   const [name, setName] = React.useState(null);
+  const [url, setURL] = React.useState("");
 
   const [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
@@ -37,10 +38,6 @@ function LoginScreen(props: any) {
     },
     { authorizationEndpoint }
   );
-
-  // Retrieve the redirect URL, add this to the callback URL list
-  // of your Auth0 application.
-  console.log(`Redirect URL: ${redirectUri}`);
 
   React.useEffect(() => {
     if (result) {
@@ -69,12 +66,25 @@ function LoginScreen(props: any) {
       <StatusBar
         barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'}
       />
-      <Text style={styles.title}>This button will log you in</Text>
+      <Text style={styles.title}>Enter your LinkedIn URL to log in</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={setURL}
+        value={url}
+        placeholder="https://linkedin.com/in/url"
+      />
       <Button
         title="Log in"
         onPress={() => {
-          props.logIn();
-          // promptAsync({ useProxy }) // Uncomment to enable Auth0 login flow
+          if (url === "") {
+            Alert.alert(
+              'Error',
+              'Please enter your full LinkedIn profile URL to log in.'
+            );
+          } else {
+            // props.logIn();
+            promptAsync({ useProxy }) // Uncomment to enable Auth0 login flow
+          }
         }}
       />
     </View>
@@ -106,7 +116,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 10,
     borderColor: 'rgba(255, 255, 255, 0.6)',
-  }
+  },
+  input: {
+    height: 40,
+    margin: 20,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5
+  },
 });
 
 const mapDipatchToProps = {
