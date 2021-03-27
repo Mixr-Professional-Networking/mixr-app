@@ -1,5 +1,5 @@
 const initialState = {
-  loggedIn: false,
+  loggedIn: true,
   linkedin: 'https://linkedin.com/in/ethankeshishian',
   user: {
     _id: 1,

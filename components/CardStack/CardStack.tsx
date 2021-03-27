@@ -23,9 +23,15 @@ function EducationSection({ data }: { data: Education }) {
         />
       </View>
       <View>
-        <Text style={styles.titleText}>{data.name}</Text>
-        <Text style={{ fontSize: 18 }}>{data.major}</Text>
-        <Text style={[styles.subtitleText, { color: Colors[color].greyText }]}>
+        <Text style={[styles.titleText, styles.allText]}>{data.name}</Text>
+        <Text style={[styles.allText, { fontSize: 18 }]}>{data.major}</Text>
+        <Text
+          style={[
+            styles.subtitleText,
+            styles.allText,
+            { color: Colors[color].greyText },
+          ]}
+        >
           {data.date}
         </Text>
       </View>
@@ -45,10 +51,16 @@ function ExperienceSection({ data }: { data: Experience }) {
         />
       </View>
       <View>
-        <Text style={styles.titleText}>
+        <Text style={[styles.titleText, styles.allText]}>
           {data.title} at {data.organization}
         </Text>
-        <Text style={[styles.subtitleText, { color: Colors[color].greyText }]}>
+        <Text
+          style={[
+            styles.subtitleText,
+            styles.allText,
+            { color: Colors[color].greyText },
+          ]}
+        >
           {data.date}
         </Text>
       </View>
@@ -68,29 +80,28 @@ function Card({ data }: { data: CardType }) {
   });
 
   return (
-    <ScrollView
+    <View
       style={[
         styles.cardContainer,
+        styles.card,
         { backgroundColor: Colors[color].background },
       ]}
     >
-      <View style={styles.card}>
-        <View
-          style={[
-            styles.headerImage,
-            { backgroundColor: Colors[color].headerImage },
-          ]}
-        />
-        <Image
-          style={styles.profileImage}
-          source={{ uri: data.picture }}
-          resizeMode="cover"
-        />
-        <Text style={styles.name}>{data.name}</Text>
-        {experience}
-        {education}
-      </View>
-    </ScrollView>
+      <View
+        style={[
+          styles.headerImage,
+          { backgroundColor: Colors[color].headerImage },
+        ]}
+      />
+      <Image
+        style={styles.profileImage}
+        source={{ uri: data.picture }}
+        resizeMode="cover"
+      />
+      <Text style={styles.name}>{data.name}</Text>
+      {experience}
+      {education}
+    </View>
   );
 }
 
@@ -195,6 +206,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 105,
     position: 'absolute',
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
   },
   profileImage: {
     width: 150,
@@ -221,5 +234,8 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     fontSize: 16,
+  },
+  allText: {
+    width: Layout.window.width - 20 - 50, //subtracting margin and width of icon. Mandates wrapping
   },
 });
