@@ -1,17 +1,17 @@
 import { combineReducers, createStore } from 'redux';
 import {
-  updateLogin,
-  updateMessages,
-  updateMessageHistory,
+  loginReducer,
+  messagesReducer,
+  messageHistoryReducer,
   cardsReducer,
 } from './reducers';
 
 const store = createStore(
   combineReducers({
-    updateLogin,
-    updateMessages,
-    updateMessageHistory,
-    cardsReducer,
+    login: loginReducer,
+    messages: messagesReducer,
+    messageHistory: messageHistoryReducer,
+    cards: cardsReducer,
   })
 );
 
