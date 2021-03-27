@@ -158,6 +158,11 @@ function mapStateToProps(state: {
 export default connect(mapStateToProps)(CardStack);
 
 const styles = StyleSheet.create({
+  header: {
+    flex: 0.2,
+    backgroundColor: '#5A658B',
+    width: Layout.window.width * 0.9,
+  },
   container: {
     flex: 1,
     backgroundColor: 'rgba(52, 52, 52, 0)',
