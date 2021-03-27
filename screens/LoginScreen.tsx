@@ -1,6 +1,14 @@
 import * as React from 'react';
-import { Alert, StyleSheet, Image, Button, StatusBar, Platform, TextInput } from 'react-native';
-import Layout from '../constants/Layout'
+import {
+  Alert,
+  StyleSheet,
+  Image,
+  Button,
+  StatusBar,
+  Platform,
+  TextInput,
+} from 'react-native';
+import Layout from '../constants/Layout';
 import { connect } from 'react-redux';
 import { logIn, logOut } from '../redux/actions';
 import useColorScheme from '../hooks/useColorScheme';
@@ -8,20 +16,21 @@ import { View, Text } from '../components/Themed';
 
 import * as AuthSession from 'expo-auth-session';
 import jwtDecode from 'jwt-decode';
+import Colors from '../constants/Colors';
 
 // Auth0 Expo Code Example: https://github.com/expo/examples/tree/master/with-auth0
 
-const auth0ClientId = "BwQHBhF9SiT4jJqDUPf2nubOfF5x40r7";
-const authorizationEndpoint = "https://mixr.us.auth0.com/authorize";
+const auth0ClientId = 'BwQHBhF9SiT4jJqDUPf2nubOfF5x40r7';
+const authorizationEndpoint = 'https://mixr.us.auth0.com/authorize';
 
 const useProxy = Platform.select({ web: false, default: true });
 const redirectUri = AuthSession.makeRedirectUri({ useProxy });
 
 function LoginScreen(props: any) {
-  const colorScheme = useColorScheme();
+  const color = useColorScheme();
 
   const [name, setName] = React.useState(null);
-  const [url, setURL] = React.useState("");
+  const [url, setURL] = React.useState('');
 
   const [request, result, promptAsync] = AuthSession.useAuthRequest(
     {
@@ -41,7 +50,7 @@ function LoginScreen(props: any) {
 
   React.useEffect(() => {
     if (result) {
-      if (result.type == "error") {
+      if (result.type == 'error') {
         Alert.alert(
           'Authentication error',
           result.params.error_description || 'something went wrong'
@@ -51,7 +60,7 @@ function LoginScreen(props: any) {
       if (result.type === 'success') {
         // Retrieve the JWT token and decode it
         const jwtToken = result.params.id_token;
-        const decoded : any = jwtDecode(jwtToken);
+        const decoded: any = jwtDecode(jwtToken);
 
         const { name } = decoded;
         setName(name);
@@ -64,11 +73,11 @@ function LoginScreen(props: any) {
   return (
     <View style={styles.container}>
       <StatusBar
-        barStyle={colorScheme === 'light' ? 'dark-content' : 'light-content'}
+        barStyle={color === 'light' ? 'dark-content' : 'light-content'}
       />
       <Text style={styles.title}>Enter your LinkedIn URL to log in</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: Colors[color].text }]}
         onChangeText={setURL}
         value={url}
         placeholder="https://linkedin.com/in/url"
@@ -76,14 +85,14 @@ function LoginScreen(props: any) {
       <Button
         title="Log in"
         onPress={() => {
-          if (url === "") {
+          if (url === '') {
             Alert.alert(
               'Error',
               'Please enter your full LinkedIn profile URL to log in.'
             );
           } else {
             // props.logIn();
-            promptAsync({ useProxy }) // Uncomment to enable Auth0 login flow
+            promptAsync({ useProxy }); // Uncomment to enable Auth0 login flow
           }
         }}
       />
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
     margin: 20,
     padding: 10,
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 5,
   },
 });
 
