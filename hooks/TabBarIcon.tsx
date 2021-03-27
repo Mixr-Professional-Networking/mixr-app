@@ -5,6 +5,7 @@ import {
   Feather,
   FontAwesome,
   MaterialIcons,
+  MaterialCommunityIcons,
 } from '@expo/vector-icons';
 
 // You can explore the built-in icon families and icons on the web at:
@@ -30,6 +31,10 @@ export default function TabBarIcon(
         name: React.ComponentProps<typeof MaterialIcons>['name'];
         type: 'MaterialIcons';
       }
+    | {
+        name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+        type: 'MaterialCommunityIcons';
+      }
   )
 ) {
   const size = props.size ? props.size : 30;
@@ -42,6 +47,14 @@ export default function TabBarIcon(
   else if (props.type === 'MaterialIcons')
     return (
       <MaterialIcons size={size} style={{ marginBottom: -3 }} {...props} />
+    );
+  else if (props.type === 'MaterialCommunityIcons')
+    return (
+      <MaterialCommunityIcons
+        size={size}
+        style={{ marginBottom: -3 }}
+        {...props}
+      />
     );
   else return <View />;
 }

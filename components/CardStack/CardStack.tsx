@@ -1,29 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 //@ts-ignore
 import SwipeCards from 'react-native-swipe-cards-deck';
 import Layout from '../../constants/Layout';
 import Colors from '../../constants/Colors';
+import useColorScheme from '../../hooks/useColorScheme';
 import { connect } from 'react-redux';
-import { View, Text } from '../Themed';
+import { Text } from '../Themed';
+import { Education, Experience, Card as CardType } from '../../types';
+import TabBarIcon from '../../hooks/TabBarIcon';
 
-function Card({ data }: any) {
+function EducationSection({ data }: { data: Education }) {
+  const color = useColorScheme();
   return (
-    <View style={styles.card}>
-      <Text>Here's the new card</Text>
+    <View style={styles.itemContainer}>
+      <View style={styles.iconContainer}>
+        <TabBarIcon
+          color={Colors[color].text}
+          name="graduation-cap"
+          type="FontAwesome"
+          size={30}
+        />
+      </View>
+      <View>
+        <Text style={styles.titleText}>{data.name}</Text>
+        <Text style={{ fontSize: 18 }}>{data.major}</Text>
+        <Text style={[styles.subtitleText, { color: Colors[color].greyText }]}>
+          {data.date}
+        </Text>
+      </View>
     </View>
+  );
+}
+function ExperienceSection({ data }: { data: Experience }) {
+  const color = useColorScheme();
+  return (
+    <View style={styles.itemContainer}>
+      <View style={styles.iconContainer}>
+        <TabBarIcon
+          color={Colors[color].text}
+          name="briefcase-variant"
+          type="MaterialCommunityIcons"
+          size={35}
+        />
+      </View>
+      <View>
+        <Text style={styles.titleText}>
+          {data.title} at {data.organization}
+        </Text>
+        <Text style={[styles.subtitleText, { color: Colors[color].greyText }]}>
+          {data.date}
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+function Card({ data }: { data: CardType }) {
+  const color = useColorScheme();
+  const experience = data.experience.map(
+    (element: Experience, index: number) => {
+      return <ExperienceSection data={element} key={index} />;
+    }
+  );
+  const education = data.education.map((element: Education, index: number) => {
+    return <EducationSection data={element} key={index} />;
+  });
+
+  return (
+    <ScrollView
+      style={[
+        styles.cardContainer,
+        { backgroundColor: Colors[color].background },
+      ]}
+    >
+      <View style={styles.card}>
+        <View
+          style={[
+            styles.headerImage,
+            { backgroundColor: Colors[color].headerImage },
+          ]}
+        />
+        <Image
+          style={styles.profileImage}
+          source={{ uri: data.picture }}
+          resizeMode="cover"
+        />
+        <Text style={styles.name}>{data.name}</Text>
+        {experience}
+        {education}
+      </View>
+    </ScrollView>
   );
 }
 
 function StatusCard({ text }: any) {
+  const color = useColorScheme();
   return (
     <View>
-      <Text style={styles.cardsText}>{text}</Text>
+      <Text style={[styles.cardsText, { color: Colors[color].text }]}>
+        {text}
+      </Text>
     </View>
   );
 }
 
-function CardStack(props: { cards: [] }) {
+function CardStack(props: { cards: CardType[] }) {
   function handleYup(card: { text: string; backgroundColor: string }) {
     console.log(`Yup for ${card.text}`);
     return true; // return false if you wish to cancel the action
@@ -37,13 +119,15 @@ function CardStack(props: { cards: [] }) {
     return true;
   }
 
+  const color = useColorScheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { shadowColor: Colors[color].text }]}>
       {props.cards ? (
         <SwipeCards
           cards={props.cards}
-          renderCard={(cardData: any) => <Card data={cardData} />}
-          keyExtractor={(cardData: { text: any }) => String(cardData.text)}
+          renderCard={(cardData: CardType) => <Card data={cardData} />}
+          key={(cardData: CardType) => String(cardData.name)}
+          keyExtractor={(cardData: CardType) => String(cardData.name)}
           renderNoMoreCards={() => <StatusCard text="No more cards..." />}
           handleYup={handleYup}
           handleNope={handleNope}
@@ -53,7 +137,6 @@ function CardStack(props: { cards: [] }) {
           showYup={false}
           showNope={false}
           showMaybe={false}
-
           // If you want a stack of cards instead of one-per-one view, activate stack mode
           // stack={true}
           // stackDepth={3}
@@ -66,7 +149,7 @@ function CardStack(props: { cards: [] }) {
 }
 
 function mapStateToProps(state: {
-  cards: any; //update when cards type gets updated
+  cards: CardType[]; //update when cards type gets updated
 }) {
   return {
     cards: state.cards,
@@ -81,16 +164,57 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
+    // shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.3,
+    elevation: 13,
+  },
+  cardContainer: {
+    borderRadius: 25,
   },
   card: {
-    justifyContent: 'center',
+    // flex: 1,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    width: Layout.window.width,
-    height: '100%',
-    borderRadius: 25,
+    width: Layout.window.width - 20, //subtracting margin
+    minHeight: '100%',
   },
   cardsText: {
     fontSize: 22,
-    color: Colors.dark.text,
+  },
+  headerImage: {
+    width: '100%',
+    height: 105,
+    position: 'absolute',
+  },
+  profileImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginTop: 30,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    height: 50,
+    alignSelf: 'flex-start',
+  },
+  iconContainer: {
+    width: 60,
+    alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 20,
+  },
+  subtitleText: {
+    fontSize: 16,
   },
 });

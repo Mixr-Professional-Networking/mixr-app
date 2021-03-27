@@ -55,3 +55,17 @@ export type Login = {
   linkedin: string;
   user: User;
 };
+
+export type Card = {
+  name: string;
+  picture: string;
+  experience: Experience[];
+  education: Education[];
+};
+
+export type Experience = { organization: string; title: string; date: string };
+export type Education = {
+  name: string;
+  date: string;
+  major: string;
+};
