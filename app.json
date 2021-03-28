@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "Tinder for LinkedIn - LA Hacks 2021",
+    "githubUrl": "https://github.com/LA-Hacks-2021/mixr-app"
   }
 }
