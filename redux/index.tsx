@@ -8,6 +8,7 @@ import {
   messagesReducer,
   messageHistoryReducer,
   cardsReducer,
+  expoPushTokenReducer,
 } from './reducers';
 
 const persistConfig = {
@@ -23,6 +24,7 @@ const store = createStore(
     messages: messagesReducer,
     messageHistory: messageHistoryReducer,
     cards: cardsReducer,
+    expoPushToken: expoPushTokenReducer,
   })
 );
 const persistor = persistStore(store);
