@@ -148,6 +148,7 @@ function CardStack(props: { cards: CardType[] }) {
           showYup={false}
           showNope={false}
           showMaybe={false}
+          dragY={false}
           // If you want a stack of cards instead of one-per-one view, activate stack mode
           // stack={true}
           // stackDepth={3}
