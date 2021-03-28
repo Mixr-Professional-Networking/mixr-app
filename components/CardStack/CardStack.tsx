@@ -29,7 +29,9 @@ function EducationSection({ data, index }: { data: Education; index: number }) {
       </View>
       <View>
         <Text style={[styles.titleText, styles.allText]}>{data.name}</Text>
-        <Text style={[styles.allText, { fontSize: 18 }]}>{data.major}</Text>
+        {data.major ? (
+          <Text style={[styles.allText, { fontSize: 18 }]}>{data.major}</Text>
+        ) : null}
         <Text
           style={[
             styles.subtitleText,
@@ -66,9 +68,13 @@ function ExperienceSection({
         )}
       </View>
       <View>
-        <Text style={[styles.titleText, styles.allText]}>
-          {data.title} at {data.organization}
-        </Text>
+        {data.organization ? (
+          <Text style={[styles.titleText, styles.allText]}>
+            {data.title} at {data.organization}
+          </Text>
+        ) : (
+          <Text style={[styles.titleText, styles.allText]}>{data.title}</Text>
+        )}
         <Text
           style={[
             styles.subtitleText,
