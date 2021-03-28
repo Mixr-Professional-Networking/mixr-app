@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Login, MessageHistory as MessageHistoryType, User } from '../types';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import Colors from '../constants/Colors';
 
 function TextChat(props: {
   messageHistory: MessageHistoryType;
@@ -13,6 +14,18 @@ function TextChat(props: {
     <GiftedChat
       messages={props.messageHistory[props.linkedin_url].messages}
       user={props.user}
+      renderBubble={(props: any) => {
+        return (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              left: {
+                backgroundColor: Colors['light'].touchableHighlight,
+              },
+            }}
+          />
+        );
+      }}
     />
   );
 }
