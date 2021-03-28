@@ -13,3 +13,12 @@ export function formatTime(date: Date) {
     (date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes())
   );
 }
+
+export function formatMonthYear(date: string) {
+  console.log('date', date, typeof date);
+  return (
+    new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date(date)) +
+    ' ' +
+    new Date(date).getFullYear()
+  );
+}

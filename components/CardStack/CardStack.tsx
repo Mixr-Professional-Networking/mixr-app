@@ -9,19 +9,23 @@ import { connect } from 'react-redux';
 import { Text } from '../Themed';
 import { Education, Experience, Card as CardType } from '../../types';
 import TabBarIcon from '../../hooks/TabBarIcon';
-import { fetchCards } from "../../redux/actions"
+import { fetchCards } from '../../redux/actions';
 
-function EducationSection({ data }: { data: Education }) {
+function EducationSection({ data, index }: { data: Education; index: number }) {
   const color = useColorScheme();
   return (
     <View style={styles.itemContainer}>
       <View style={styles.iconContainer}>
-        <TabBarIcon
-          color={Colors[color].text}
-          name="graduation-cap"
-          type="FontAwesome"
-          size={30}
-        />
+        {index === 0 ? (
+          <TabBarIcon
+            color={Colors[color].text}
+            name="graduation-cap"
+            type="FontAwesome"
+            size={30}
+          />
+        ) : (
+          <View />
+        )}
       </View>
       <View>
         <Text style={[styles.titleText, styles.allText]}>{data.name}</Text>
@@ -39,17 +43,27 @@ function EducationSection({ data }: { data: Education }) {
     </View>
   );
 }
-function ExperienceSection({ data }: { data: Experience }) {
+function ExperienceSection({
+  data,
+  index,
+}: {
+  data: Experience;
+  index: number;
+}) {
   const color = useColorScheme();
   return (
     <View style={styles.itemContainer}>
       <View style={styles.iconContainer}>
-        <TabBarIcon
-          color={Colors[color].text}
-          name="briefcase-variant"
-          type="MaterialCommunityIcons"
-          size={35}
-        />
+        {index == 0 ? (
+          <TabBarIcon
+            color={Colors[color].text}
+            name="briefcase-variant"
+            type="MaterialCommunityIcons"
+            size={35}
+          />
+        ) : (
+          <View />
+        )}
       </View>
       <View>
         <Text style={[styles.titleText, styles.allText]}>
@@ -71,38 +85,43 @@ function ExperienceSection({ data }: { data: Experience }) {
 
 function Card({ data }: { data: CardType }) {
   const color = useColorScheme();
-  const experience = data?.experience.map(
-    (element: Experience, index: number) => {
-      return <ExperienceSection data={element} key={index} />;
-    }
-  );
-  const education = data?.education.map((element: Education, index: number) => {
-    return <EducationSection data={element} key={index} />;
-  });
+  console.log(data);
+  const experience = data?.experience
+    .filter((val: Experience, index: number) => index <= 2)
+    .map((element: Experience, index: number) => {
+      return <ExperienceSection data={element} key={index} index={index} />;
+    });
+  const education = data?.education
+    .filter((val: Education, index: number) => index <= 1)
+    .map((element: Education, index: number) => {
+      return <EducationSection data={element} key={index} index={index} />;
+    });
 
   return (
-    <View
-      style={[
-        styles.cardContainer,
-        styles.card,
-        { backgroundColor: Colors[color].background },
-      ]}
-    >
+    <ScrollView>
       <View
         style={[
-          styles.headerImage,
-          { backgroundColor: Colors[color].headerImage },
+          styles.cardContainer,
+          styles.card,
+          { backgroundColor: Colors[color].background },
         ]}
-      />
-      <Image
-        style={styles.profileImage}
-        source={{ uri: data.picture }}
-        resizeMode="cover"
-      />
-      <Text style={styles.name}>{data.name}</Text>
-      {experience}
-      {education}
-    </View>
+      >
+        <View
+          style={[
+            styles.headerImage,
+            { backgroundColor: Colors[color].headerImage },
+          ]}
+        />
+        <Image
+          style={styles.profileImage}
+          source={{ uri: data.picture }}
+          resizeMode="cover"
+        />
+        <Text style={styles.name}>{data.name}</Text>
+        {experience}
+        {education}
+      </View>
+    </ScrollView>
   );
 }
 
@@ -117,7 +136,7 @@ function StatusCard({ text }: any) {
   );
 }
 
-function CardStack(props: { cards: CardType[], fetchCards: () => void }) {
+function CardStack(props: { cards: CardType[]; fetchCards: () => void }) {
   function handleYup(card: { text: string; backgroundColor: string }) {
     console.log(`Yup for ${card.text}`);
     return true; // return false if you wish to cancel the action
@@ -174,8 +193,8 @@ function mapStateToProps(state: {
 }
 
 const mapDipatchToProps = {
-  fetchCards
-}
+  fetchCards,
+};
 
 export default connect(mapStateToProps, mapDipatchToProps)(CardStack);
 
@@ -233,7 +252,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: 'row',
-    height: 50,
+    marginVertical: 10,
     alignSelf: 'flex-start',
   },
   iconContainer: {

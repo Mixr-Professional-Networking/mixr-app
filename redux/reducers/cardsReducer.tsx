@@ -1,3 +1,4 @@
+import { formatMonthYear } from '../../hooks/dateFormatting';
 const initialState = [
   // {
   //   name: 'Ethan Keshishian',
@@ -17,8 +18,8 @@ const initialState = [
 ] as any[];
 
 function cardsReducer(state = initialState, action: any) {
-  console.log("Cards Reducer")
-  console.log(action)
+  console.log('Cards Reducer');
+  console.log(action);
   switch (action.type) {
     case 'update':
       return action.payload.map((x: any) => ({
@@ -27,13 +28,15 @@ function cardsReducer(state = initialState, action: any) {
         experience: x.experiences.map((x: any) => ({
           organization: x.company,
           title: x.title,
-          date: x.startDate
+          date:
+            formatMonthYear(x.startDate) + ' - ' + formatMonthYear(x.endDate),
         })),
         education: x.education.map((x: any) => ({
           name: x.schoolName,
-          date: x.startDate,
-          major: x.degreeName
-        }))
+          date:
+            formatMonthYear(x.startDate) + ' - ' + formatMonthYear(x.endDate),
+          major: x.degreeName,
+        })),
       }));
     default:
       return state;
