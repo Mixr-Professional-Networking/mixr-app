@@ -91,7 +91,6 @@ function LoginScreen(props: any) {
               'Please enter your full LinkedIn profile URL to log in.'
             );
           } else {
-            // props.logIn();
             promptAsync({ useProxy }); // Uncomment to enable Auth0 login flow
           }
         }}

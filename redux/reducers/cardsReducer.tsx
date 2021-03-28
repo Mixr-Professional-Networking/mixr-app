@@ -21,7 +21,20 @@ function cardsReducer(state = initialState, action: any) {
   console.log(action)
   switch (action.type) {
     case 'update':
-      return [ ...action.payload ];
+      return action.payload.map((x: any) => ({
+        name: x.userProfile.fullName,
+        picture: x.userProfile.photo,
+        experience: x.experiences.map((x: any) => ({
+          organization: x.company,
+          title: x.title,
+          date: x.startDate
+        })),
+        education: x.education.map((x: any) => ({
+          name: x.schoolName,
+          date: x.startDate,
+          major: x.degreeName
+        }))
+      }));
     default:
       return state;
   }

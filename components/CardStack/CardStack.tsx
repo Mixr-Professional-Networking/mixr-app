@@ -71,8 +71,7 @@ function ExperienceSection({ data }: { data: Experience }) {
 
 function Card({ data }: { data: CardType }) {
   const color = useColorScheme();
-  console.log(data.userProfile)
-  const experience = data?.experiences.map(
+  const experience = data?.experience.map(
     (element: Experience, index: number) => {
       return <ExperienceSection data={element} key={index} />;
     }
