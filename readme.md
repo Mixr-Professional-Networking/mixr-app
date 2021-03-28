@@ -1,6 +1,6 @@
 # Instructions for set up
 
-1. Run git clone https://github.com/LA-Hacks-2021/mixr-app.git
+1. Run `git clone https://github.com/LA-Hacks-2021/mixr-app.git`
 
 2. cd to the directory where you cloned the code and run `npm install`
 
@@ -18,4 +18,4 @@
 
 ## Debugging
 
-- If you're on Windows and the network connection is failing, follow [this article](https://medium.com/@hariroshanmail/how-to-run-react-native-project-in-windows-10-and-using-iphone-after-latest-expo-update-307f3d43f850) to give your device access to the port. Make sure to use the port 19000 instead of 1443. If this still doesn't work, try [this](https://medium.com/@colin_78999/solving-network-response-timed-out-when-using-expo-on-windows-b486c22d5584) article.
+- If you're on Windows and the network connection is failing, follow [this article](https://medium.com/@hariroshanmail/how-to-run-react-native-project-in-windows-10-and-using-iphone-after-latest-expo-update-307f3d43f850) to give your device access to the port. Make sure to use the port 19000 (or the correct port, the port might change) instead of 1443. If this still doesn't work, try [this](https://medium.com/@colin_78999/solving-network-response-timed-out-when-using-expo-on-windows-b486c22d5584) article.

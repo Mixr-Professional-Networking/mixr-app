@@ -8,6 +8,9 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
+    greyText: '#555',
+    touchableHighlight: '#DDDDDD',
+    headerImage: '#5a658b',
   },
   dark: {
     text: '#fff',
@@ -15,5 +18,8 @@ export default {
     tint: tintColorDark,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorDark,
+    greyText: '#ccc',
+    touchableHighlight: '#555',
+    headerImage: '#8b705a',
   },
 };
