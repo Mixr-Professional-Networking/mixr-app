@@ -65,7 +65,7 @@ function LoginScreen(props: any) {
         const { name } = decoded;
         setName(name);
 
-        props.logIn();
+        props.logIn(url);
       }
     }
   }, [result]);
