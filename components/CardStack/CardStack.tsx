@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 //@ts-ignore
 import SwipeCards from 'react-native-swipe-cards-deck';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { Text } from '../Themed';
 import { Education, Experience, Card as CardType } from '../../types';
 import TabBarIcon from '../../hooks/TabBarIcon';
+import { fetchCards } from "../../redux/actions"
 
 function EducationSection({ data }: { data: Education }) {
   const color = useColorScheme();
@@ -70,12 +71,13 @@ function ExperienceSection({ data }: { data: Experience }) {
 
 function Card({ data }: { data: CardType }) {
   const color = useColorScheme();
-  const experience = data.experience.map(
+  console.log(data.userProfile)
+  const experience = data?.experiences.map(
     (element: Experience, index: number) => {
       return <ExperienceSection data={element} key={index} />;
     }
   );
-  const education = data.education.map((element: Education, index: number) => {
+  const education = data?.education.map((element: Education, index: number) => {
     return <EducationSection data={element} key={index} />;
   });
 
@@ -116,7 +118,7 @@ function StatusCard({ text }: any) {
   );
 }
 
-function CardStack(props: { cards: CardType[] }) {
+function CardStack(props: { cards: CardType[], fetchCards: () => void }) {
   function handleYup(card: { text: string; backgroundColor: string }) {
     console.log(`Yup for ${card.text}`);
     return true; // return false if you wish to cancel the action
@@ -130,10 +132,14 @@ function CardStack(props: { cards: CardType[] }) {
     return true;
   }
 
+  useEffect(() => {
+    props.fetchCards();
+  }, [props.fetchCards]);
+
   const color = useColorScheme();
   return (
     <View style={[styles.container, { shadowColor: Colors[color].text }]}>
-      {props.cards ? (
+      {props.cards?.length > 0 ? (
         <SwipeCards
           cards={props.cards}
           renderCard={(cardData: CardType) => <Card data={cardData} />}
@@ -167,7 +173,12 @@ function mapStateToProps(state: {
     cards: state.cards,
   };
 }
-export default connect(mapStateToProps)(CardStack);
+
+const mapDipatchToProps = {
+  fetchCards
+}
+
+export default connect(mapStateToProps, mapDipatchToProps)(CardStack);
 
 const styles = StyleSheet.create({
   header: {
