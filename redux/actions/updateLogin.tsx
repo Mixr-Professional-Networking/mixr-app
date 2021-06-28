@@ -1,20 +1,31 @@
-import { API_ROOT_URL } from "../../constants/Api"
+import { API_ROOT_URL } from '../../constants/Api';
 
 export function logIn(url: string) {
   return (dispatch: any) => {
     fetch(`${API_ROOT_URL}/li/${url}`)
-      .then(x => x.json())
+      .then((x) => x.json())
       .then(
-        data => {
+        (data) => {
           dispatch({ type: 'LOG_IN', payload: { vanity: url, data } });
         },
-        err => { dispatch({ type: 'LOG_IN_FAILED', payload: err }); }
+        (err) => {
+          dispatch({ type: 'LOG_IN_FAILED', payload: err });
+        }
       );
-  }
-} 
+  };
+}
 
 export function logOut() {
   return {
     type: 'LOG_OUT',
+  };
+}
+
+export function bypassLogin(url: string) {
+  return (dispatch: any) => {
+    dispatch({
+      type: 'LOG_IN_BYPASS',
+      payload: { vanity: url },
+    });
   };
 }

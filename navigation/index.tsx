@@ -27,6 +27,7 @@ export function Navigation({
   colorScheme: ColorSchemeName;
   isLoggedIn: boolean;
 }) {
+  console.log('logged in? ', isLoggedIn);
   return (
     <NavigationContainer
       linking={LinkingConfiguration}

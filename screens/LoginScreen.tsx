@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Layout from '../constants/Layout';
 import { connect } from 'react-redux';
-import { logIn, logOut } from '../redux/actions';
+import { logIn, logOut, bypassLogin } from '../redux/actions';
 import useColorScheme from '../hooks/useColorScheme';
 import { View, Text } from '../components/Themed';
 
@@ -91,7 +91,8 @@ function LoginScreen(props: any) {
               'Please enter your full LinkedIn profile URL to log in.'
             );
           } else {
-            promptAsync({ useProxy }); // Uncomment to enable Auth0 login flow
+            // promptAsync({ useProxy }); // Uncomment to enable Auth0 login flow
+            props.bypassLogin(url);
           }
         }}
       />
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
 const mapDipatchToProps = {
   logIn,
   logOut,
+  bypassLogin,
 };
 
 export default connect(null, mapDipatchToProps)(LoginScreen);
